@@ -88,10 +88,7 @@ function matchCalculation() {
     5,
     4,
   ]
-  
-  const GREAT_MATCH_THRESHOLD = 85;
-  const FRIENDS_THRESHOLD = 65;
-  
+   
   const MAX_SCORE = 25
 
   let q1Response = document.getElementById("question-1").selectedOptions[0].value;  
@@ -145,14 +142,8 @@ console.log(q5Response);
     totalMatch *= 100 / MAX_SCORE;
     totalMatch = Math.round(totalMatch);
     console.log("tm="+ totalMatch);
-
-    if (finalScore >= GREAT_MATCH_THRESHOLD) {
-        message = "We are an amazing match. Want to get food together?";
-      } else if (finalScore >= NOTFRIENDS_THRESHOLD) {
-        message = "Sorry, maybe we can be friends in the future. ";
-      } else {
-        message = "🚪 Run away before I make you! ";
-      }
+    
+    document.getElementById("match").innerHTML = "Your compatibility is: " + totalMatch;
 }
 </script>
 </body>
