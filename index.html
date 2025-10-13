@@ -80,11 +80,80 @@ console.log("Starting JavaScript")
 
 function matchCalculation() {
   console.log("matchCalculation()")
+
+  const WANTED_RESPONSE = [
+    5,
+    1,
+    3,
+    5,
+    4,
+  ]
+  
+  const GREAT_MATCH_THRESHOLD = 85;
+  const FRIENDS_THRESHOLD = 65;
+  
+  const MAX_SCORE = 25
+
+  let q1Response = document.getElementById("question-1").selectedOptions[0].value;  
+  let q2Response = document.getElementById("question-2").selectedOptions[0].value;
+  let q3Response = document.getElementById("question-3").selectedOptions[0].value;
+  let q4Response = document.getElementById("question-4").selectedOptions[0].value;
+  let q5Response = document.getElementById("question-5").selectedOptions[0].value;
+
+console.log("Question-1 Answers");
+console.log(document.getElementById("question-1").selectedOptions[0].text);
+console.log(document.getElementById("question-1").selectedOptions[0].value);
+console.log(q1Response);
+
+console.log("Question-2 Answers");
+console.log(document.getElementById("question-2").selectedOptions[0].text);
+console.log(document.getElementById("question-2").selectedOptions[0].value);
+console.log(q2Response);
+
+console.log("Question-3 Answers");
+console.log(document.getElementById("question-3").selectedOptions[0].text);
+console.log(document.getElementById("question-3").selectedOptions[0].value);
+console.log(q3Response);
+
+console.log("Question-4 Answers");
+console.log(document.getElementById("question-4").selectedOptions[0].text);
+console.log(document.getElementById("question-4").selectedOptions[0].value);
+console.log(q4Response);
+
+console.log("Question-5 Answers");
+console.log(document.getElementById("question-5").selectedOptions[0].text);
+console.log(document.getElementById("question-5").selectedOptions[0].value);
+console.log(q5Response);
+
+  //Calculate Match Scores
+    let q1Match = 5 - Math.abs(q1Response - WANTED_RESPONSE[0]);
+    let q2Match = 5 - Math.abs(q2Response - WANTED_RESPONSE[1]);
+    let q3Match = 5 - Math.abs(q3Response - WANTED_RESPONSE[2]);
+    let q4Match = 5 - Math.abs(q4Response - WANTED_RESPONSE[3]);
+    let q5Match = 5 - Math.abs(q5Response - WANTED_RESPONSE[4]);
+
+    console.log("c1="+q1Match);
+    console.log("c2="+q2Match);
+    console.log("c3="+q3Match);
+    console.log("c4="+q4Match);
+    console.log("c5="+q5Match);
+  
+    //Calculate total Match Score.
+    let totalMatch = q1Match + q2Match + q3Match + q4Match + q5Match;
+  
+    //Convert Match Score to a percentage
+    totalMatch *= 100 / MAX_SCORE;
+    totalMatch = Math.round(totalMatch);
+    console.log("tm="+ totalMatch);
+
+    if (finalScore >= GREAT_MATCH_THRESHOLD) {
+        message = "We are an amazing match. Want to get food together?";
+      } else if (finalScore >= NOTFRIENDS_THRESHOLD) {
+        message = "Sorry, maybe we can be friends in the future. ";
+      } else {
+        message = "🚪 Run away before I make you! ";
+      }
 }
-
-
-
-
 </script>
 </body>
 </html>

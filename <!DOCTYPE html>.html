@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>True Love Compatibility Quiz 💘</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffe6e6, #fff9f9);
+      color: #333;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1, h2 { text-align: center; color: #d6336c; }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 1.5rem;
+    }
+    label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+    input[type="number"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+    }
+    button {
+      display: block;
+      margin: 1rem auto;
+      background: #d6336c;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b82d5b;
+    }
+    .result {
+      margin-top: 2rem;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+    .error {
+      color: red;
+      font-size: 0.9rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>💘 True Love Compatibility Quiz 💘</h1>
+    <p>Rate how much you agree with the following statements from <b>1 (Strongly Disagree)</b> to <b>5 (Strongly Agree)</b>.  
+    Your answers will be compared with my "true love" answers!</p>
+
+    <form id="loveForm">
+      <div id="questions"></div>
+      <button type="submit">Check Compatibility ❤️</button>
+    </form>
+
+    <div id="output" class="result"></div>
+  </div>
+
+  <script>
+    // ===============================
+    // Constants
+    // ===============================
+    const QUESTIONS = [
+      "Broccoli is delicious.",
+      "Cats are better than dogs.",
+      "I enjoy long walks on the beach.",
+      "I prefer texting over calling.",
+      "I believe pineapple belongs on pizza."
+    ];
+
+    // My “ideal” (true love) answers (1–5)
+    const DESIRED_ANSWERS = [1, 4, 5, 2, 3];
+
+    // Thresholds
+    const TRUE_LOVE_THRESHOLD = 85;
+    const FRIENDS_THRESHOLD = 60;
+
+    // ===============================
+    // Generate Questions
+    // ===============================
+    const questionContainer = document.getElementById("questions");
+    QUESTIONS.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.classList.add("question");
+      div.innerHTML = `
+        <label for="q${i}">${i + 1}. ${q}</label>
+        <input type="number" id="q${i}" min="1" max="5" required />
+        <div id="err${i}" class="error"></div>
+      `;
+      questionContainer.appendChild(div);
+    });
+
+    // ===============================
+    // Validation Function
+    // ===============================
+    function validate(inputs) {
+      let valid = true;
+      inputs.forEach((input, i) => {
+        const val = Number(input.value);
+        const errMsg = document.getElementById(`err${i}`);
+        if (isNaN(val) || val < 1 || val > 5) {
+          errMsg.textContent = "Please enter a number between 1 and 5.";
+          valid = false;
+        } else {
+          errMsg.textContent = "";
+        }
+      });
+      return valid;
+    }
+
+    // ===============================
+    // Calculate Compatibility
+    // ===============================
+    document.getElementById("loveForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const inputs = Array.from(document.querySelectorAll("input[type='number']"));
+      if (!validate(inputs)) return;
+
+      // Calculate per-question scores
+      let totalDiff = 0;
+      let summary = "<h2>Results 💞</h2><ul>";
+
+      inputs.forEach((input, i) => {
+        const userVal = Number(input.value);
+        const diff = Math.abs(userVal - DESIRED_ANSWERS[i]);
+        totalDiff += diff;
+        const questionScore = (5 - diff) * 20; // 0–100 per question
+        summary += `<li>Q${i+1}: ${questionScore}% compatibility</li>`;
+      });
+      summary += "</ul>";
+
+      // Final score (maximum 100)
+      const finalScore = Math.max(0, 100 - totalDiff * 4); // each point difference = -4%
+      let message = "";
+
+      if (finalScore >= TRUE_LOVE_THRESHOLD) {
+        message = "💖 True Love! You two are a perfect match!";
+      } else if (finalScore >= FRIENDS_THRESHOLD) {
+        message = "🙂 You might make great friends!";
+      } else {
+        message = "🚪 Run away — this isn't your person!";
+      }
+
+      const resultDiv = document.getElementById("output");
+      resultDiv.innerHTML = `
+        ${summary}
+        <h3>Overall Compatibility: ${finalScore}%</h3>
+        <p>${message}</p>
+      `;
+      resultDiv.style.background =
+        finalScore >= TRUE_LOVE_THRESHOLD
+          ? "#ffe6f2"
+          : finalScore >= FRIENDS_THRESHOLD
+          ? "#e6f7ff"
+          : "#fff0f0";
+    });
+  </script>
+
+</body>
+</html>
