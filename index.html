@@ -18,7 +18,6 @@
     <p>There is "5" - strongly agree, "4" - agree, "3" - neither</p>
     <p>agree nor disagree, "2" - disagree, and "1" - strongly disagree.</p>
     <p>Good luck and I hope to see you on the other side!</p>
-  </p>
   </h3>
   <label>Detroit Lions are the best</label><br />
   <select id="question-1">
@@ -75,6 +74,8 @@
 
 <button onclick="matchCalculation()">Am I a match?</button>
 <p id="match"></p>
+<p id="message"></p>
+<p id ="headers"></p>
 <script>
 console.log("Starting JavaScript")
 
@@ -143,8 +144,25 @@ console.log(q5Response);
     totalMatch = Math.round(totalMatch);
     console.log("tm="+ totalMatch);
     
-    document.getElementById("match").innerHTML = "Your compatibility is: " + totalMatch;
-}
+  document.getElementById("headers").innerHTML ="Matchmaker Summary"
+  
+    document.getElementById("match").innerHTML ="Total Match Score=" + totalMatch
+    document.getElementById("match").innerHTML ="Total Match Score=" + totalMatch
+    document.getElementById("match").innerHTML ="Total Match Score=" + totalMatch
+    document.getElementById("match").innerHTML ="Total Match Score=" + totalMatch
+    document.getElementById("match").innerHTML ="Total Match Score=" + totalMatch
+    
+
+    document.getElementById("match").innerHTML ="Total Match Score=" + totalMatch
+
+    if (totalMatch >= 85){
+      document.getElementById("message").innerHTML = "True match, let's get dinner!";
+    }if (totalMatch <85 && totalMatch >=65){
+    document.getElementById("message").innerHTML = "We could be friends in the near future";
+    }if (totalMatch <65){
+      document.getElementById("message").innerHTML = "Run away before I make you!!"
+    }
+  }
 </script>
 </body>
 </html>
